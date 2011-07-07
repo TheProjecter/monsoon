@@ -151,7 +151,7 @@ public class V06WebSocket<T extends SelectableChannel & GatheringByteChannel & S
       restoreBuffer(buf, saved);
       buf.flip();
       bytesRemaining -= n;
-      if (isClient) {
+      if (!isClient) {
         for (int i = buf.position(); i < buf.limit(); i++) {
           buf.put(i, (byte) (buf.get(i) ^ mask[maskPosition]));
           maskPosition = (maskPosition + 1) % 4;
@@ -188,7 +188,7 @@ public class V06WebSocket<T extends SelectableChannel & GatheringByteChannel & S
           case BEFORE_MESSAGE:
           case BETWEEN_FRAMES:
             firstFrame = (state == InboundState.BEFORE_MESSAGE);
-            if (isClient) {
+            if (!isClient) {
               bytesRemaining = 4;
               state = InboundState.IN_MASK;
             } else {
@@ -212,7 +212,7 @@ public class V06WebSocket<T extends SelectableChannel & GatheringByteChannel & S
             if (b < 0) {
               return false;
             }
-            if (isClient) {
+            if (!isClient) {
               b = b ^ mask[maskPosition];
               maskPosition = (maskPosition + 1) % 4;
             }
@@ -231,7 +231,7 @@ public class V06WebSocket<T extends SelectableChannel & GatheringByteChannel & S
             if (b < 0) {
               return false;
             }
-            if (isClient) {
+            if (!isClient) {
               b = b ^ mask[maskPosition];
               maskPosition = (maskPosition + 1) % 4;
             }
@@ -259,7 +259,7 @@ public class V06WebSocket<T extends SelectableChannel & GatheringByteChannel & S
               if (b < 0) {
                 return false;
               }
-              if (isClient) {
+              if (!isClient) {
                 b = b ^ mask[maskPosition];
                 maskPosition = (maskPosition + 1) % 4;
               }
