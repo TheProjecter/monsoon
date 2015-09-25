@@ -1,0 +1,1 @@
+This project is a Java implementation of the websocket protocol, which is designed by the IETF HyBi working group. It contains both client and server implementations and it is built using Java NIO in order to take advantage of it's non-blocking I/O facilities.
